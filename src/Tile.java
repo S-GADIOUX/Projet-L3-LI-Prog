@@ -6,10 +6,11 @@ public class Tile {
 	private LandStyle lander;
 	private int number;
 
-	public Tile(LaunchStyle lau, LandStyle lan){
+	public Tile(LaunchStyle lau, LandStyle lan, int nb){
 		this.launcher = lau;
 		this.lander = lan;
 		this.players = new HashSet<Player>();
+		this.number = nb;
 	}
 
 	public boolean isEmpty(){

@@ -20,5 +20,9 @@ public class Player {
 		this.tileNumber = t;
 	}
 
+	public String toString(){
+		return this.name + " on tile "+this.tileNumber;
+	}
+
 
 }
