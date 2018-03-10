@@ -5,7 +5,7 @@ public class Game{
 	public int bLength;
 	public Dice dice;
 
-	public Game(String[] playersName, int boardLength, Dice d){
+	public Game(String[] playersName, int boardLength, Dice d, double pOfRelaunch, double pOfBackpush){
 		this.dice = d;
 		this.bLength = boardLength;
 		this.players= new Player[playersName.length];
@@ -15,6 +15,19 @@ public class Game{
 		}
 
 		this.board = new Tile[boardLength];
+		board[0] = new Tile(new NormalLaunch(), new NormalLand());
+		for(int i = 1; i < bLength-1 ; i++){
+			LandStyle lan = new NormalLand();
+			double rand = Math.random();
+			if (rand < pOfRelaunch){
+				lan = new RelaunchLand();
+			}else if(rand < pOfRelaunch + pOfBackpush){
+				lan = new BackpushLand(3);
+			}
+			board[i] = new Tile(new NormalLaunch(), lan);
+		}
+		board[bLength-1] = new Tile(new NormalLaunch(), new NormalLand());
+		
 	
 	}
 
