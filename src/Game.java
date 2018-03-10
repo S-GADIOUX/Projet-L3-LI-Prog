@@ -21,7 +21,7 @@ public class Game{
 	public void play(){
 		Tile end = this.board[this.board.length-1];
 		int mv, effect;
-		while(end.player == null ){
+		while(end.isEmpty()){
 			for(Player p : this.players ){
 				mv = this.board[p.tileNumber].launch(p,dice);
 				effect = this.board[Math.min(bLength-1, Math.max(p.tileNumber + mv, 0))].land(p,dice);
