@@ -16,5 +16,9 @@ public class Player {
 		return r;
 	}
 
+	public void moveTo(int t){
+		this.tileNumber = t;
+	}
+
 
 }

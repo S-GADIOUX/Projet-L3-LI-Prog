@@ -4,6 +4,7 @@ public class Tile {
 	private HashSet<Player> players;
 	private LaunchStyle launcher;
 	private LandStyle lander;
+	private int number;
 
 	public Tile(LaunchStyle lau, LandStyle lan){
 		this.launcher = lau;
@@ -21,10 +22,12 @@ public class Tile {
 	}
 
 	public int land(Player p, Dice d){
-		return this.lander.land(d);
+		p.moveTo(number);
+		return this.lander.land(p,d);
 	}
 
 	public void fall(Player p){
+		p.moveTo(number);
 		this.players.add(p);
 	}
 

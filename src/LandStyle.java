@@ -1,5 +1,5 @@
 public interface LandStyle{
 
-	public int land(Dice d);
+	public int land(Player p, Dice d);
 
 }
