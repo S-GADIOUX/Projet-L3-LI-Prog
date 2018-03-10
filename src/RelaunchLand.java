@@ -1,6 +1,7 @@
 public class RelaunchLand implements LandStyle{
 
 	public int land(Player p, Dice d){
-		return d.roll(false);
+		System.out.println("Let's reroll the dice");
+		return d.roll(true);
 	}
 }

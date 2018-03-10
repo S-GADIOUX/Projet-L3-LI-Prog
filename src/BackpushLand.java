@@ -7,6 +7,7 @@ public class BackpushLand implements LandStyle {
 	}
 
 	public int land(Player p, Dice d){
+		System.out.println("Let's go back of " + value + " tile" +(value<1?"s":"")+" !");
 		return 0-value;
 	}
 }
