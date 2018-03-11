@@ -1,4 +1,5 @@
 import com.sgadioux.style.*;
+import java.util.Scanner;
 public class Game{
 	
 	public Player[] players;
@@ -6,15 +7,17 @@ public class Game{
 	public int bLength;
 	public Dice dice;
 	public int tryNb;
-	public int clueNb
+	public int clueNb;
+	public WordVector datas;
 
-	public Game(String[] playersName, int boardLength, Dice d, int tNb, int cNb,  double pOfRelaunch, double pOfBackpush){
-		this.dice = d;
-		this.clueNb = cNb;
-		this.tryNb = tNb;
-		this.bLength = boardLength;
+	public Game(String[] playersName, int boardLength, Dice d, int tNb, int cNb,  double pOfRelaunch, double pOfBackpush, WordVector data){
 		this.players= new Player[playersName.length];
-
+		this.bLength = boardLength;
+		this.dice = d;
+		this.tryNb = tNb;
+		this.clueNb = cNb;
+		this.datas = data;
+		
 		for(int i=0; i < playersName.length; i ++){
 			this.players[i] = new Player(playersName[i]);
 		}
@@ -49,10 +52,11 @@ public class Game{
 					this.board[Math.min(this.board.length-1,Math.max(p.tileNumber + effect, 0))].fall(p);
 					System.out.println(""+p+" played.");
 					i = 0;
-					b = false
+					b = false;
 					while(i< this.tryNb && !b){
-						b = this.guess();
 						i++;
+						System.out.println("Try " + i + "/"+tryNb+ " : ");
+						b = this.guess();
 					}
 				
 				}
@@ -63,7 +67,18 @@ public class Game{
 	}
 
 	public boolean guess(){
+		System.out.println("Type " + this.clueNb + " word" + (this.clueNb>1 ? "s" : "") + " : ");
 		Scanner sc = new Scanner(System.in);
-		retunr false;
+		String[] words = new String[clueNb];
+		for(int i = 0; i<clueNb ; i++){
+			words[i] = sc.next();
+		}
+		for(int j = 0; j<clueNb ; j++){
+			while(!datas.contains(words[j])){
+				System.out.println("\n" + words[j] + " is not a known word. Please enter an other word : ");
+				words[j] = sc.next();
+			}
+		}
+		return false;
 	}
 }

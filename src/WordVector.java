@@ -28,6 +28,10 @@ public class WordVector {
 		}
 
 	}
+	
+	public boolean contains(String s){
+		return datas.containsKey(s);
+	}
 
 	public static double[] moyenne(double[][] vectors){
 		int nb = vectors.length;
