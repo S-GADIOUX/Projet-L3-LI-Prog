@@ -5,9 +5,13 @@ public class Game{
 	public Tile[] board;
 	public int bLength;
 	public Dice dice;
+	public int tryNb;
+	public int clueNb
 
-	public Game(String[] playersName, int boardLength, Dice d, double pOfRelaunch, double pOfBackpush){
+	public Game(String[] playersName, int boardLength, Dice d, int tNb, int cNb,  double pOfRelaunch, double pOfBackpush){
 		this.dice = d;
+		this.clueNb = cNb;
+		this.tryNb = tNb;
 		this.bLength = boardLength;
 		this.players= new Player[playersName.length];
 
@@ -34,16 +38,32 @@ public class Game{
 
 	public void play(){
 		Tile end = this.board[this.board.length-1];
-		int mv, effect;
+		int mv, effect, i;
+		boolean b;
 		while(end.isEmpty()){
 			for(Player p : this.players ){
-				mv = this.board[p.tileNumber].launch(p,dice);
-				effect = this.board[Math.min(bLength-1, Math.max(p.tileNumber + mv, 0))].land(p,dice);
-				this.board[Math.min(this.board.length-1,Math.max(p.tileNumber + effect, 0))].fall(p);
-				System.out.println(""+p+" played.");
+				b = true;
+				while(b){
+					mv = this.board[p.tileNumber].launch(p,dice);
+					effect = this.board[Math.min(bLength-1, Math.max(p.tileNumber + mv, 0))].land(p,dice);
+					this.board[Math.min(this.board.length-1,Math.max(p.tileNumber + effect, 0))].fall(p);
+					System.out.println(""+p+" played.");
+					i = 0;
+					b = false
+					while(i< this.tryNb && !b){
+						b = this.guess();
+						i++;
+					}
+				
+				}
 			}
 			System.out.println("A turn is done.\n");
 		}
 	
+	}
+
+	public boolean guess(){
+		Scanner sc = new Scanner(System.in);
+		retunr false;
 	}
 }
