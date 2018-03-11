@@ -1,3 +1,4 @@
+package com.sgadioux.style;
 public class BackpushLand implements LandStyle {
 
 	private int value;

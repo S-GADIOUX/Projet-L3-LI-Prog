@@ -1,3 +1,4 @@
+import com.sgadioux.style.*;
 public class Game{
 	
 	public Player[] players;

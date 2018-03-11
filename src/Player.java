@@ -1,7 +1,8 @@
+package com.sgadioux.style;
 public class Player {
 	
 	String name;
-	int tileNumber;
+	public int tileNumber;
 	int mod;
 
 	public Player(String name){

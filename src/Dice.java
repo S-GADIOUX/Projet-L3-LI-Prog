@@ -1,3 +1,4 @@
+package com.sgadioux.style;
 public class Dice {
 	
 	private int side;

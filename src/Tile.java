@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import com.sgadioux.style.*;
 public class Tile {
 	
 	private HashSet<Player> players;

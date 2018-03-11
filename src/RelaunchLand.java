@@ -1,3 +1,4 @@
+package com.sgadioux.style;
 public class RelaunchLand implements LandStyle{
 
 	public int land(Player p, Dice d){
