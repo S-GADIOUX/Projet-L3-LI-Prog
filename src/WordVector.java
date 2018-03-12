@@ -4,6 +4,7 @@ public class WordVector {
 
 	private HashMap<String, double[]> datas;
 	private int dim;
+	private String[] keys;
 
 	public WordVector(String path){
 		try {
@@ -21,7 +22,8 @@ public class WordVector {
 					data[j] = sc.nextDouble();
 				}
 				this.datas.put(word, data);
-			}	
+			}
+			this.keys = datas.keySet().toArray();
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -70,6 +72,10 @@ public class WordVector {
 	}
 
 	public Object nearest(double[] keyWord, int number){
+		Cell head = new Cell("", 0.0);
+		for (String s : keys){
+			head = head.add( new Cell (s, similarity(datas.get(s), keyWord)), number);
+		}
 		return null;
 	}
 
