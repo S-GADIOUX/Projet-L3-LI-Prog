@@ -49,10 +49,10 @@ public class Game{
 			for(Player p : this.players ){
 				b = true;
 				while(b){
+					System.out.println("It's turn of "+p+".");
 					mv = this.board[p.tileNumber].launch(p,dice);
 					effect = this.board[Math.min(bLength-1, Math.max(p.tileNumber + mv, 0))].land(p,dice);
 					this.board[Math.min(this.board.length-1,Math.max(p.tileNumber + effect, 0))].fall(p);
-					System.out.println(""+p+" played.");
 					i = 0;
 					b = false;
 					while(i< this.tryNb && !b){
@@ -60,6 +60,7 @@ public class Game{
 						System.out.println("Try " + i + "/"+tryNb+ " : ");
 						b = this.guess();
 					}
+					System.out.println(""+p+" played.");
 				
 				}
 			}
@@ -81,7 +82,7 @@ public class Game{
 				words[j] = sc.next();
 			}
 		}
-		double[][] vectors = new double[datas.getDataSize()][clueNb];
+		double[][] vectors = new double[clueNb][];
 		for(int k = 0; k < clueNb ; k++)
 			vectors[k] = datas.getVector(words[k]);
 		double[] average = datas.average(vectors);

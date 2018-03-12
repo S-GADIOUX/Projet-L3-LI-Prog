@@ -12,7 +12,6 @@ public class WordVector {
 			String line = bReader.readLine();
 			Scanner sc = new Scanner(line);
 			int nb = sc.nextInt();
-			this.dim = sc.nextInt();
 			this.datas = new HashMap<String, double[]>(nb+1, 1);
 			for(int i = 0; i < nb ; i++){
 				sc = new Scanner(bReader.readLine());
