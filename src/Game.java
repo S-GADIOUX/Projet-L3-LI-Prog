@@ -8,14 +8,16 @@ public class Game{
 	public Dice dice;
 	public int tryNb;
 	public int clueNb;
+	public int nearestNb;
 	public WordVector datas;
 
-	public Game(String[] playersName, int boardLength, Dice d, int tNb, int cNb,  double pOfRelaunch, double pOfBackpush, WordVector data){
+	public Game(String[] playersName, int boardLength, Dice d, int tNb, int cNb, int nNb, double pOfRelaunch, double pOfBackpush, WordVector data){
 		this.players= new Player[playersName.length];
 		this.bLength = boardLength;
 		this.dice = d;
 		this.tryNb = tNb;
 		this.clueNb = cNb;
+		this.nearestNb = nNb;
 		this.datas = data;
 		
 		for(int i=0; i < playersName.length; i ++){
@@ -79,6 +81,11 @@ public class Game{
 				words[j] = sc.next();
 			}
 		}
+		double[][] vectors = new double[datas.getDataSize()][clueNb];
+		for(int k = 0; k < clueNb ; k++)
+			vectors[k] = datas.getVector(words[k]);
+		double[] average = datas.average(vectors);
+		Object o = datas.nearest( average , nearestNb);
 		return false;
 	}
 }

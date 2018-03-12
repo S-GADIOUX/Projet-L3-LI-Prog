@@ -3,6 +3,7 @@ import java.util.*;
 public class WordVector {
 
 	private HashMap<String, double[]> datas;
+	private int dim;
 
 	public WordVector(String path){
 		try {
@@ -11,7 +12,7 @@ public class WordVector {
 			String line = bReader.readLine();
 			Scanner sc = new Scanner(line);
 			int nb = sc.nextInt();
-			int dim = sc.nextInt();
+			this.dim = sc.nextInt();
 			this.datas = new HashMap<String, double[]>(nb+1, 1);
 			for(int i = 0; i < nb ; i++){
 				sc = new Scanner(bReader.readLine());
@@ -29,11 +30,19 @@ public class WordVector {
 
 	}
 	
+	public int getDataSize(){
+		return this.dim;
+	}
+
+	public double[] getVector(String key){
+		return this.datas.get(key);
+	}
+		
 	public boolean contains(String s){
 		return datas.containsKey(s);
 	}
 
-	public static double[] moyenne(double[][] vectors){
+	public static double[] average(double[][] vectors){
 		int nb = vectors.length;
 		int dataLength = vectors[0].length;
 		double[] total = new double[dataLength];
@@ -60,5 +69,10 @@ public class WordVector {
 		return num/(Math.sqrt(det1*det2));
 	
 	}
+
+	public Object nearest(double[] keyWord, int number){
+		return null;
+	}
+
 
 }
