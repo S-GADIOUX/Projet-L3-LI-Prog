@@ -27,7 +27,6 @@ public class WordVector {
 				keys[i] = word;
 				this.datas.put(word, data);
 			}
-			String tmp = datas.keySet();
 		}
 		catch (Exception e){
 			e.printStackTrace();
