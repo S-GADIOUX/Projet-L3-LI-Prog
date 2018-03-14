@@ -5,6 +5,7 @@ public class WordVector {
 	private HashMap<String, double[]> datas;
 	private int dim;
 	private String[] keys;
+	private int wordNb;
 
 	public WordVector(String path){
 		try {
@@ -12,18 +13,21 @@ public class WordVector {
 			BufferedReader bReader = new BufferedReader(fReader);
 			String line = bReader.readLine();
 			Scanner sc = new Scanner(line);
-			int nb = sc.nextInt();
-			this.datas = new HashMap<String, double[]>(nb+1, 1);
-			for(int i = 0; i < nb ; i++){
+			this.wordNb = sc.nextInt();
+			this.dim = sc.nextInt();
+			this.datas = new HashMap<String, double[]>(wordNb+1, 1);
+			this.keys = new String[this.wordNb];
+			for(int i = 0; i < wordNb ; i++){
 				sc = new Scanner(bReader.readLine());
 				String word = sc.next();
 				double[] data = new double[dim];
 				for(int j = 0 ; j < dim ; j++ ){
 					data[j] = sc.nextDouble();
 				}
+				keys[i] = word;
 				this.datas.put(word, data);
 			}
-			this.keys = datas.keySet().toArray();
+			String tmp = datas.keySet();
 		}
 		catch (Exception e){
 			e.printStackTrace();

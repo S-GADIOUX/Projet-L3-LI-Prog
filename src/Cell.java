@@ -20,14 +20,14 @@ public class Cell {
 	}
 	
 	public Cell add( Cell c, int max ){
-		if(max<1);
+		if(max<1)
 			return null;
 		if (this.score > c.getScore()){
 			if (this.next == null){
 				this.next = c;
 				return this;
 			}
-			this.next = this.next(c, max-1);
+			this.next = this.add(c, max-1);
 			return this;
 		}
 		c.setNext(this);
