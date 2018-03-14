@@ -22,7 +22,7 @@ public class WordVector {
 				String word = sc.next();
 				double[] data = new double[dim];
 				for(int j = 0 ; j < dim ; j++ ){
-					data[j] = sc.nextDouble();
+					data[j] = Double.parseDouble(sc.next());
 				}
 				keys[i] = word;
 				this.datas.put(word, data);
@@ -32,6 +32,10 @@ public class WordVector {
 			e.printStackTrace();
 		}
 
+	}
+
+	public String getRandomWord(){
+		return keys[(int)(Math.random() * wordNb)];
 	}
 	
 	public int getDataSize(){
@@ -74,12 +78,17 @@ public class WordVector {
 	
 	}
 
-	public Object nearest(double[] keyWord, int number){
+	public HashMap<String, Double> nearest(double[] keyWord, int number){
 		Cell head = new Cell("", 0.0);
 		for (String s : keys){
 			head = head.add( new Cell (s, similarity(datas.get(s), keyWord)), number);
 		}
-		return null;
+		HashMap<String, Double> nMap= new HashMap<String, Double>(number+1, 1);
+		for (int i = 0 ; i < number ; i++){
+			nMap.put(head.getWord(), head.getScore());
+			head = head.getNext();
+		}
+		return nMap;
 	}
 
 

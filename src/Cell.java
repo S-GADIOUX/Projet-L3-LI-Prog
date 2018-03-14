@@ -13,6 +13,8 @@ public class Cell {
 		this.next = n;
 	} 
 	
+	public String getWord(){return this.word;}
+		
 	public Cell getNext(){ return this.next;}
 	
 	public double getScore(){
@@ -27,7 +29,7 @@ public class Cell {
 				this.next = c;
 				return this;
 			}
-			this.next = this.add(c, max-1);
+			this.next = this.next.add(c, max-1);
 			return this;
 		}
 		c.setNext(this);

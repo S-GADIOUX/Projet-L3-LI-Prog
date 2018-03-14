@@ -1,5 +1,5 @@
 import com.sgadioux.style.*;
-import java.util.Scanner;
+import java.util.*;
 public class Game{
 	
 	public Player[] players;
@@ -48,19 +48,27 @@ public class Game{
 		while(end.isEmpty()){
 			for(Player p : this.players ){
 				b = true;
+				System.out.println("It's turn of "+p+".");
 				while(b){
-					System.out.println("It's turn of "+p+".");
 					mv = this.board[p.tileNumber].launch(p,dice);
 					effect = this.board[Math.min(bLength-1, Math.max(p.tileNumber + mv, 0))].land(p,dice);
 					this.board[Math.min(this.board.length-1,Math.max(p.tileNumber + effect, 0))].fall(p);
+					if (p.tileNumber == bLength-1){
+						System.out.println("Incredible "+p+", you finished the game, let's see if someone esle can do it in the same turn.");
+						break;
+					}
 					i = 0;
 					b = false;
+					String tg = datas.getRandomWord();
 					while(i< this.tryNb && !b){
 						i++;
 						System.out.println("Try " + i + "/"+tryNb+ " : ");
-						b = this.guess();
+						b = this.guess(tg);
 					}
-					System.out.println(""+p+" played.");
+					if(b)
+						System.out.println("Well played, let's continue "+p);
+					else
+						System.out.println(""+p+" played.");
 				
 				}
 			}
@@ -69,7 +77,7 @@ public class Game{
 	
 	}
 
-	public boolean guess(){
+	public boolean guess(String toGuess){
 		System.out.println("Type " + this.clueNb + " word" + (this.clueNb>1 ? "s" : "") + " : ");
 		Scanner sc = new Scanner(System.in);
 		String[] words = new String[clueNb];
@@ -86,7 +94,8 @@ public class Game{
 		for(int k = 0; k < clueNb ; k++)
 			vectors[k] = datas.getVector(words[k]);
 		double[] average = datas.average(vectors);
-		Object o = datas.nearest( average , nearestNb);
-		return false;
+		HashMap<String, Double> nearestMap = datas.nearest( average , nearestNb);
+		System.out.println(Arrays.asList(nearestMap));
+		return nearestMap.containsKey(toGuess);
 	}
 }
