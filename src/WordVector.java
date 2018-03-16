@@ -7,31 +7,25 @@ public class WordVector {
 	private String[] keys;
 	private int wordNb;
 
-	public WordVector(String path){
-		try {
-			FileReader fReader= new FileReader(path);
-			BufferedReader bReader = new BufferedReader(fReader);
-			String line = bReader.readLine();
-			Scanner sc = new Scanner(line);
-			this.wordNb = sc.nextInt();
-			this.dim = sc.nextInt();
-			this.datas = new HashMap<String, double[]>(wordNb+1, 1);
-			this.keys = new String[this.wordNb];
-			for(int i = 0; i < wordNb ; i++){
-				sc = new Scanner(bReader.readLine());
-				String word = sc.next();
-				double[] data = new double[dim];
-				for(int j = 0 ; j < dim ; j++ ){
-					data[j] = Double.parseDouble(sc.next());
-				}
-				keys[i] = word;
-				this.datas.put(word, data);
+	public WordVector(String path) throws Exception{
+		FileReader fReader= new FileReader(path);
+		BufferedReader bReader = new BufferedReader(fReader);
+		String line = bReader.readLine();
+		Scanner sc = new Scanner(line);
+		this.wordNb = sc.nextInt();
+		this.dim = sc.nextInt();
+		this.datas = new HashMap<String, double[]>(wordNb+1, 1);
+		this.keys = new String[this.wordNb];
+		for(int i = 0; i < wordNb ; i++){
+			sc = new Scanner(bReader.readLine());
+			String word = sc.next();
+			double[] data = new double[dim];
+			for(int j = 0 ; j < dim ; j++ ){
+				data[j] = Double.parseDouble(sc.next());
 			}
+			keys[i] = word;
+			this.datas.put(word, data);
 		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
-
 	}
 
 	public String getRandomWord(){
