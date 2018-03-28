@@ -16,13 +16,14 @@ public class Main {
 		int errorZone = 10;
 		double relaunchTile = 0.2;
 		double backTile = 0.1;
-		String path = "vec0.txt";
+		String path = args[0];
 		WordVector datas = null;
 		try {
 			datas = new WordVector(path);
 		}
 		catch(Exception e){
 			b = false;
+			e.printStackTrace();
 			System.out.println("Error in file");	
 		}
 		String[] players = {"Alpha","Delta","Gamma","Echo","Blade","Fire"};

@@ -17,14 +17,20 @@ public class WordVector {
 		this.datas = new HashMap<String, double[]>(wordNb+1, 1);
 		this.keys = new String[this.wordNb];
 		for(int i = 0; i < wordNb ; i++){
-			sc = new Scanner(bReader.readLine());
-			String word = sc.next();
-			double[] data = new double[dim];
-			for(int j = 0 ; j < dim ; j++ ){
-				data[j] = Double.parseDouble(sc.next());
+			String buff = bReader.readLine();
+			if (!buff.equals("") ){
+				sc = new Scanner(buff);
+				String word = sc.next();
+				double[] data = new double[dim];
+				for(int j = 0 ; j < dim ; j++ ){
+					data[j] = Double.parseDouble(sc.next());
+				}
+				keys[i] = word;
+				this.datas.put(word, data);
 			}
-			keys[i] = word;
-			this.datas.put(word, data);
+			else {
+			i--;
+			}
 		}
 	}
 
