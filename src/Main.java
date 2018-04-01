@@ -10,16 +10,24 @@ public class Main {
 		int clueNb = 3;
 		int tryNb = 3;
 		int errorZone = 10;
-		int bLength = 100; //To unHard
+		int bLength = 100;
 		double relaunchTile = 0.2; //To unHard
 		double backTile = 0.1; //To unHard
-		int dSize = 6; //To unHard
+		int dSize = 6;
 		boolean trickedDice = false;
 		while (len > i){
 			switch (args[i]){
 				case("--w2v") :
 					i++;
 					path = args[i];	
+					break;
+				case("--board") :
+					i++;
+					bLength = Integer.parseInt(args[i]);
+					break;
+				case("--dice") :
+					i++;
+					dSize = Integer.parseInt(args[i]);
 					break;
 				case("--nbJoueurs"):
 					i++;
