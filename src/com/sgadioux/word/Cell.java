@@ -1,26 +1,60 @@
+package com.sgadioux.word;
+
+
+/**
+ *
+ * @author sebga
+ */
 public class Cell {
 	
 	private final String word;
 	private final double score;
 	private Cell next = null;
 	
+	/**
+	 *
+	 * @param w
+	 * @param sco
+	 */
 	public Cell (String w, double sco){
 		this.word = w;
 		this.score = sco;
 	}
 	
+	/**
+	 *
+	 * @param n
+	 */
 	public void setNext( Cell n){
 		this.next = n;
 	} 
 	
+	/**
+	 *
+	 * @return
+	 */
 	public String getWord(){return this.word;}
 		
+	/**
+	 *
+	 * @return
+	 */
 	public Cell getNext(){ return this.next;}
 	
+	/**
+	 *
+	 * @return
+	 */
 	public double getScore(){
 		return this.score;
 	}
 	
+	/**
+	 *
+	 * @param c
+	 * @param max
+	 * @return
+	 */
 	public Cell add( Cell c, int max ){
 		if(max<1)
 			return null;

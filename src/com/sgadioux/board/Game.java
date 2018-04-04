@@ -1,15 +1,53 @@
-import com.sgadioux.style.Player;
+package com.sgadioux.board;
+
+import com.sgadioux.word.WordVector;
 import com.sgadioux.style.*;
 import java.util.*;
+
+/**
+ *
+ * @author sebga
+ */
 public class Game{
 	
+	/**
+	 * The list of players
+	 */
 	public Player[] players;
+
+	/**
+	 * The representation of the board
+	 */
 	public Tile[] board;
+
+	/**
+	 * The length of the board
+	 */
 	public int bLength;
+
+	/**
+	 * The Dice
+	 */
 	public Dice dice;
+
+	/**
+	 * The number of try
+	 */
 	public int tryNb;
+
+	/**
+	 * The number of clue
+	 */
 	public int clueNb;
+
+	/**
+	 * The number of words kept
+	 */
 	public int nearestNb;
+
+	/**
+	 * The data utility class
+	 */
 	public WordVector datas;
 
 	/**
@@ -54,6 +92,9 @@ public class Game{
 	
 	}
 
+	/**
+	 *
+	 */
 	public void play(){
 		Tile end = this.board[this.board.length-1];
 		int mv, effect, i;
@@ -90,6 +131,11 @@ public class Game{
 	
 	}
 
+	/**
+	 *
+	 * @param toGuess
+	 * @return
+	 */
 	public boolean guess(String toGuess){
 		System.out.println("Type " + this.clueNb + " word" + (this.clueNb>1 ? "s" : "") + " : ");
 		Scanner sc = new Scanner(System.in);
@@ -106,7 +152,7 @@ public class Game{
 		double[][] vectors = new double[clueNb][];
 		for(int k = 0; k < clueNb ; k++)
 			vectors[k] = datas.getVector(words[k]);
-		double[] average = datas.average(vectors);
+		double[] average = WordVector.average(vectors);
 		HashMap<String, Double> nearestMap = datas.nearest( average , nearestNb);
 		System.out.println(Arrays.asList(nearestMap));
 		return nearestMap.containsKey(toGuess);

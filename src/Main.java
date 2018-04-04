@@ -1,6 +1,17 @@
-import com.sgadioux.style.*;
+import com.sgadioux.board.Dice;
+import com.sgadioux.board.Game;
+import com.sgadioux.word.WordVector;
+
+/**
+ *
+ * @author sebga
+ */
 public class Main {
 	
+	/**
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args){
 		boolean b = true;
 		int len = args.length;

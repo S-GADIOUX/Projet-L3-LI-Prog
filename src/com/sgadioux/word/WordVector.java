@@ -1,5 +1,12 @@
+package com.sgadioux.word;
+
 import java.io.*;
 import java.util.*;
+
+/**
+ *
+ * @author sebga
+ */
 public class WordVector {
 
 	private final HashMap<String, double[]> datas;
@@ -7,6 +14,11 @@ public class WordVector {
 	private final String[] keys;
 	private final int wordNb;
 
+	/**
+	 *
+	 * @param path
+	 * @throws Exception
+	 */
 	public WordVector(String path) throws Exception{
 		FileReader fReader= new FileReader(path);
 		BufferedReader bReader = new BufferedReader(fReader);
@@ -34,22 +46,45 @@ public class WordVector {
 		}
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public String getRandomWord(){
 		return keys[(int)(Math.random() * wordNb)];
 	}
 	
+	/**
+	 *
+	 * @return
+	 */
 	public int getDataSize(){
 		return this.dim;
 	}
 
+	/**
+	 *
+	 * @param key
+	 * @return
+	 */
 	public double[] getVector(String key){
 		return this.datas.get(key);
 	}
 		
+	/**
+	 *
+	 * @param s
+	 * @return
+	 */
 	public boolean contains(String s){
 		return datas.containsKey(s);
 	}
 
+	/**
+	 *
+	 * @param vectors
+	 * @return
+	 */
 	public static double[] average(double[][] vectors){
 		int nb = vectors.length;
 		int dataLength = vectors[0].length;
@@ -64,6 +99,12 @@ public class WordVector {
 	
 	}
 
+	/**
+	 *
+	 * @param v1
+	 * @param v2
+	 * @return
+	 */
 	public static double similarity(double [] v1, double[] v2){
 		double num = 0 ;
 		double det1 = 0 ;
@@ -78,12 +119,18 @@ public class WordVector {
 	
 	}
 
+	/**
+	 *
+	 * @param keyWord
+	 * @param number
+	 * @return
+	 */
 	public HashMap<String, Double> nearest(double[] keyWord, int number){
 		Cell head = new Cell("", 0.0);
 		for (String s : keys){
 			head = head.add( new Cell (s, similarity(datas.get(s), keyWord)), number);
 		}
-		HashMap<String, Double> nMap= new HashMap<String, Double>(number+1, 1);
+		HashMap<String, Double> nMap= new HashMap<>(number+1, 1);
 		for (int i = 0 ; i < number ; i++){
 			nMap.put(head.getWord(), head.getScore());
 			head = head.getNext();
