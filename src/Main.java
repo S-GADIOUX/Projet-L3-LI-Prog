@@ -67,9 +67,10 @@ public class Main {
 			e.printStackTrace();
 		}
 		String[] players = {"Alpha","Delta","Gamma","Echo","Blade","Fire"};
-		if(datas != null){
+		if(b){
 			Game g = new Game(players, bLength, d, clueNb, tryNb, errorZone, relaunchTile, backTile, datas);
 			g.play();
+		} else {
 		}
 	
 	}

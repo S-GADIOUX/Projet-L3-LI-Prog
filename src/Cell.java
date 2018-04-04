@@ -1,7 +1,7 @@
 public class Cell {
 	
-	private String word;
-	private double score;
+	private final String word;
+	private final double score;
 	private Cell next = null;
 	
 	public Cell (String w, double sco){

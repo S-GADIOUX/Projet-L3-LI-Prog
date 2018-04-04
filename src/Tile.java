@@ -1,3 +1,4 @@
+import com.sgadioux.style.Player;
 import java.util.HashSet;
 import com.sgadioux.style.*;
 public class Tile {
@@ -15,7 +16,7 @@ public class Tile {
 	}
 
 	public boolean isEmpty(){
-		return this.players.size() == 0;
+		return this.players.isEmpty();
 	}
 
 	public int launch(Player p, Dice d){

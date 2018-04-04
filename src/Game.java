@@ -1,3 +1,4 @@
+import com.sgadioux.style.Player;
 import com.sgadioux.style.*;
 import java.util.*;
 public class Game{
@@ -11,6 +12,18 @@ public class Game{
 	public int nearestNb;
 	public WordVector datas;
 
+	/**
+	 *
+	 * @param playersName
+	 * @param boardLength
+	 * @param d
+	 * @param tNb
+	 * @param cNb
+	 * @param nNb
+	 * @param pOfRelaunch
+	 * @param pOfBackpush
+	 * @param data
+	 */
 	public Game(String[] playersName, int boardLength, Dice d, int tNb, int cNb, int nNb, double pOfRelaunch, double pOfBackpush, WordVector data){
 		this.players= new Player[playersName.length];
 		this.bLength = boardLength;

@@ -2,10 +2,10 @@ import java.io.*;
 import java.util.*;
 public class WordVector {
 
-	private HashMap<String, double[]> datas;
-	private int dim;
-	private String[] keys;
-	private int wordNb;
+	private final HashMap<String, double[]> datas;
+	private final int dim;
+	private final String[] keys;
+	private final int wordNb;
 
 	public WordVector(String path) throws Exception{
 		FileReader fReader= new FileReader(path);
@@ -14,7 +14,7 @@ public class WordVector {
 		Scanner sc = new Scanner(line);
 		this.wordNb = sc.nextInt();
 		this.dim = sc.nextInt();
-		this.datas = new HashMap<String, double[]>(wordNb+1, 1);
+		this.datas = new HashMap<>(wordNb+1, 1);
 		this.keys = new String[this.wordNb];
 		for(int i = 0; i < wordNb ; i++){
 			String buff = bReader.readLine();
