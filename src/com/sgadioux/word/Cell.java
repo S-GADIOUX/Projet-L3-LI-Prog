@@ -4,8 +4,11 @@ package com.sgadioux.word;
 /** 
  * Une cellule est un objet utilisé pour trier les différents mots.
  * Il s'agit d'une implémentation naïve à base de cellule liée.
- * Ajouter un élément dans la liste trié est semi constant ( O(n) ).
+ * Ajouter un élément dans la liste trié est semi constant.
  * En sortir un est instantané.
+ * @see 
+ * Cell#add( Cell cell, int max )
+ * 
  * @author sebga
  */
 public class Cell {
@@ -49,22 +52,19 @@ public class Cell {
 	
 	/**
 	 * Getteur du mot.
-	 * @return
-	 *	Le mot contenu par la cellule.
+	 * @return Le mot contenu par la cellule.
 	 */
 	public String getWord(){return this.word;}
 		
 	/**
 	 * Getteur de la celluce suivante.
-	 * @return
-	 *	La cellule suivante.
+	 * @return La cellule suivante.
 	 */
 	public Cell getNext(){ return this.next;}
 	
 	/**
 	 * Getteur du score.
-	 * @return
-	 *	Le score associé au mot.
+	 * @return Le score associé au mot.
 	 */
 	public double getScore(){
 		return this.score;
@@ -72,15 +72,17 @@ public class Cell {
 	
 	/**
 	 * Methode pour ajouter une cellule dans la liste.
-	 * Cette methode a une sécurité pour éviter d'ajoter inutilement des cellules.
-	 * Cette sécurité ne vérifie pas le nombre d'élément dans la liste
+	 * La méthode est récursive.
+	 * Cette methode a une sécurité pour éviter d'ajouter inutilement des cellules.
+	 * Cette sécurité ne vérifie pas le nombre d'élément dans la liste.
+	 * Il est donc possible qu'il y ai plus d'éléments dans la liste que la valeur de max.
+	 * En revanche, le nombre d'iteration maximale est O(max).
 	 * 
 	 * @param cell
 	 *	La cellule à ajouter dans la liste.
 	 * @param max
-	 *	Le nombre maximum d'éléments dans la liste.
-	 * @return
-	 *	La cellule avec le score le plus élevé entre les deux.
+	 *	Le nombre maximum d'éléments possible dans la liste.
+	 * @return La cellule avec le score le plus élevé entre les deux.
 	 */
 	public Cell add( Cell cell, int max ){
 		if(max<1)

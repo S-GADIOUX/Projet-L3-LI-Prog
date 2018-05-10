@@ -4,20 +4,38 @@ import java.io.*;
 import java.util.*;
 
 /**
- *
+ * Un objet WordVector contient la liste de tous les mots avec leur vecteur associé.
+ * Il utilise une HashMap pour lier les mots aux vecteurs et une liste quand il faut itérer sur les mots.
+ * Les vecteurs sont représentés pas des tableaux de double.
  * @author sebga
  */
 public class WordVector {
-
+	
+	/**
+	 * The hash linking words to their position.
+	 */
 	private final HashMap<String, double[]> datas;
+	
+	/**
+	 * The dimension of the vectorial space which represent words.
+	 */
 	private final int dim;
+	
+	/**
+	 * The list of all known words.
+	 */
 	private final String[] keys;
+	
+	/**
+	 * The number of known words.
+	 */
 	private final int wordNb;
 
 	/**
-	 *
+	 * Génère un objet WordVector à partir d'un fichier bien formé. Renvoie une erreur dans le cas contraire.
 	 * @param path
-	 * @throws Exception
+	 *	Le chemin vers le ficher à lire
+	 * @throws Exception Dans le cas où le fichier n'est pas bien formé.
 	 */
 	public WordVector(String path) throws Exception{
 		FileReader fReader= new FileReader(path);
@@ -47,43 +65,47 @@ public class WordVector {
 	}
 
 	/**
-	 *
-	 * @return
+	 * Renvoie un mot aléatoire connu. 
+	 * @return Un mot aléatoire sous forme de string.
 	 */
 	public String getRandomWord(){
 		return keys[(int)(Math.random() * wordNb)];
 	}
 	
 	/**
-	 *
-	 * @return
+	 * Renvoie la dimension des vecteurs de mot.
+	 * @return La dimension sous forme d'entier.
 	 */
 	public int getDataSize(){
 		return this.dim;
 	}
 
 	/**
-	 *
+	 * Renvoie le vecteur associé à un mot.
 	 * @param key
-	 * @return
+	 *	Le mot dont le vecteur doit être récupéré
+	 * @return Le vecteur associé sous la forme d'un tableau de double.
 	 */
 	public double[] getVector(String key){
 		return this.datas.get(key);
 	}
 		
 	/**
-	 *
+	 * Vérifie si un mot est connu.
 	 * @param s
+	 *	Le mot à tester
 	 * @return
+	 *	True si le mot est connue, False sinon.
 	 */
 	public boolean contains(String s){
 		return datas.containsKey(s);
 	}
 
 	/**
-	 *
+	 * Calcule la moyenne entre les vecteurs passés en arguments.
 	 * @param vectors
-	 * @return
+	 *	Un tableau de vecteurs.
+	 * @return Un vecteur sous la forme d'un tableau de double.
 	 */
 	public static double[] average(double[][] vectors){
 		int nb = vectors.length;
@@ -100,10 +122,12 @@ public class WordVector {
 	}
 
 	/**
-	 *
+	 * Calcule la similarité cosinus entre deux vecteurs
 	 * @param v1
+	 *	Le premier vecteur.
 	 * @param v2
-	 * @return
+	 *	Le second vecteur.
+	 * @return Un double entre 0 et 1 inclus.
 	 */
 	public static double similarity(double [] v1, double[] v2){
 		double num = 0 ;
@@ -120,10 +144,12 @@ public class WordVector {
 	}
 
 	/**
-	 *
+	 * Calcule et renvoie les mots les plus proche au vecteur passé en argument.
 	 * @param keyWord
+	 *	Le vecteur à comparer, sous la forme d'un tableau de double.
 	 * @param number
-	 * @return
+	 *	Le nombre de mot devant être renvoyé.
+	 * @return Une hashmap contenant les -number- mots les proche du vecteur avec les scores associés.
 	 */
 	public HashMap<String, Double> nearest(double[] keyWord, int number){
 		Cell head = new Cell("", 0.0);

@@ -63,7 +63,7 @@ public class Main {
 			i++;
 		
 		}
-		Dice d = new Dice(dSize, trickedDice);
+		Dice dice = new Dice(dSize, trickedDice);
 		if (bLength<1) {
 			System.out.println("Board Length must be positive");
 			b = false;
@@ -77,9 +77,11 @@ public class Main {
 			System.out.println("Error in file : ");	
 			e.printStackTrace();
 		}
-		String[] players = {"Alpha","Delta","Gamma","Echo","Blade","Fire"};
+		String[] players = new String[nbPlayer];
+		//players = ["Alpha","Delta","Gamma","Echo","Blade","Fire"] ;
+		
 		if(b){
-			Game g = new Game(players, bLength, d, clueNb, tryNb, errorZone, relaunchTile, backTile, datas);
+			Game g = new Game(players, bLength, dice, clueNb, tryNb, errorZone, relaunchTile, backTile, datas);
 			g.play();
 		} else {
 		}
