@@ -51,16 +51,26 @@ public class Game{
 	public WordVector datas;
 
 	/**
-	 *
+	 *Crée un nouveau jeu avec les paramètres passés en arguments.
+	 * 
 	 * @param playersName
+	 *	La liste des nom des joueurs.
 	 * @param boardLength
+	 *	La taille du plateau.
 	 * @param d
+	 *	Le de utilisé pour jouer.
 	 * @param tNb
+	 *	Le nombre d'essai.
 	 * @param cNb
+	 *	Le nombre d'indice à donner.
 	 * @param nNb
+	 *	Le nombre de mots listés comme proche.
 	 * @param pOfRelaunch
+	 *	Le pourcentage de case avec relance, sous la forme d'un double entre 0 et 1.
 	 * @param pOfBackpush
+	 *	Le pourcentage de case avec recul, sous la forme d'un double entre 0 et 1.
 	 * @param data
+	 *	L'utilitaire de données.
 	 */
 	public Game(String[] playersName, int boardLength, Dice d, int tNb, int cNb, int nNb, double pOfRelaunch, double pOfBackpush, WordVector data){
 		this.players= new Player[playersName.length];
@@ -71,10 +81,12 @@ public class Game{
 		this.nearestNb = nNb;
 		this.datas = data;
 		
+		//Création des joueurs.
 		for(int i=0; i < playersName.length; i ++){
 			this.players[i] = new Player(playersName[i]);
 		}
-
+		
+		// Créatio du plateau de jeu.
 		this.board = new Tile[boardLength];
 		board[0] = new Tile(new NormalLaunch(), new NormalLand(), 0);
 		for(int i = 1; i < bLength-1 ; i++){
@@ -132,9 +144,14 @@ public class Game{
 	}
 
 	/**
-	 *
+	 * Fait deviner un mot à un joueur.
+	 * Cette fonction demander au joueur d'entrer les mots et elle va afficher les mots les plus proches à cet ensemble de mot.
+	 * Cette fonction va aussi vérifier si les mots sont correctement écrits.
+	 * Elle renvoie True en cas de succès.
 	 * @param toGuess
+	 *	Le mot à deviner.
 	 * @return
+	 *	True si le joueur a réussi , False sinon.
 	 */
 	public boolean guess(String toGuess){
 		System.out.println("Type " + this.clueNb + " word" + (this.clueNb>1 ? "s" : "") + " : ");
