@@ -1,6 +1,7 @@
 import com.sgadioux.board.Dice;
 import com.sgadioux.board.Game;
 import com.sgadioux.word.WordVector;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -82,16 +83,26 @@ public class Main {
 		}
 		catch(Exception e){
 			correct = false;
-			System.out.println("Error in file : ");	
-			e.printStackTrace();
+			System.out.println("There is an error in the file ");
+			if (e instanceof NullPointerException)
+				System.err.println("NullPointerException : the number of words is smaller than the second value on the first line.");
+			else {	
+				if (e instanceof FileNotFoundException){
+					System.err.println("FileNotFoundException : the file could not be found.");
+				}
+				else {
+					e.printStackTrace();
+				}
+			}
 		}
-		String[] players = null;
 		if (nbPlayer<1) {
 			System.out.println("We must have at least one player.");
 			correct = false;
-		}else{
-			players = new String[nbPlayer];
-
+		}
+			
+		//Lancement du jeu dans le cas où les arguments sont corrects
+		if(correct){
+			String[] players = new String[nbPlayer];
 			Scanner sc;
 			for(int j = 0; j<nbPlayer; j++){
 				System.out.println("Name of the player "+(j+1)+" : ");
@@ -100,10 +111,6 @@ public class Main {
 			}
 			for( String s : players)
 				System.out.println(s);
-		}
-		
-		//Lancement du jeu dans le cas où les arguments sont corrects
-		if(correct){
 			Game g = new Game(players, boardLength, dice, clueNb, tryNb, errorZone, relaunchTile, backTile, datas);
 			g.play();
 		} else {
