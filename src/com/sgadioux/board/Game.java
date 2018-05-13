@@ -23,7 +23,7 @@ public class Game{
 	/**
 	 * The length of the board
 	 */
-	public int bLength;
+	public int boardLength;
 
 	/**
 	 * The Dice
@@ -55,7 +55,7 @@ public class Game{
 	 * 
 	 * @param playersName
 	 *	La liste des nom des joueurs.
-	 * @param boardLength
+	 * @param bLength
 	 *	La taille du plateau.
 	 * @param d
 	 *	Le de utilisé pour jouer.
@@ -72,9 +72,9 @@ public class Game{
 	 * @param data
 	 *	L'utilitaire de données.
 	 */
-	public Game(String[] playersName, int boardLength, Dice d, int tNb, int cNb, int nNb, double pOfRelaunch, double pOfBackpush, WordVector data){
+	public Game(String[] playersName, int bLength, Dice d, int tNb, int cNb, int nNb, double pOfRelaunch, double pOfBackpush, WordVector data){
 		this.players= new Player[playersName.length];
-		this.bLength = boardLength;
+		this.boardLength = bLength;
 		this.dice = d;
 		this.tryNb = tNb;
 		this.clueNb = cNb;
@@ -89,7 +89,7 @@ public class Game{
 		// Créatio du plateau de jeu.
 		this.board = new Tile[boardLength];
 		board[0] = new Tile(new NormalLaunch(), new NormalLand(), 0);
-		for(int i = 1; i < bLength-1 ; i++){
+		for(int i = 1; i < this.boardLength-1 ; i++){
 			LandStyle lan = new NormalLand();
 			double rand = Math.random();
 			if (rand < pOfRelaunch){
@@ -99,7 +99,7 @@ public class Game{
 			}
 			board[i] = new Tile(new NormalLaunch(), lan, i);
 		}
-		board[bLength-1] = new Tile(new NormalLaunch(), new NormalLand(), bLength-1);
+		board[this.boardLength-1] = new Tile(new NormalLaunch(), new NormalLand(), this.boardLength-1);
 		
 	
 	}
@@ -111,41 +111,41 @@ public class Game{
 	public void play(){
 		Tile end = this.board[this.board.length-1];
 		int mv, effect, i;
-		boolean b;
+		boolean keepPlaying;
 		while(end.isEmpty()){
 			
 			//Début d'un tour.
 			for(Player p : this.players ){
-				b = true;
-				System.out.println("It's turn of "+p+".");
-				while(b){
+				keepPlaying = true;
+				System.out.println("\nIt's turn of "+p+".");
+				while(keepPlaying){
 					
 					//Mouvement
 					mv = this.board[p.tileNumber].launch(p,dice);
-					effect = this.board[Math.min(bLength-1, Math.max(p.tileNumber + mv, 0))].land(p,dice);
+					effect = this.board[Math.min(boardLength-1, Math.max(p.tileNumber + mv, 0))].land(p,dice);
 					this.board[Math.min(this.board.length-1,Math.max(p.tileNumber + effect, 0))].fall(p);
-					if (p.tileNumber == bLength-1){
+					if (p.tileNumber == boardLength-1){
 						System.out.println("Incredible "+p+", you finished the game, let's see if someone esle can do it in the same turn.");
 						break;
 					}
 					
 					//Question sur un mot.
 					i = 0;
-					b = false;
+					keepPlaying = false;
 					String tg = datas.getRandomWord();
-					while(i< this.tryNb && !b){
+					while(i< this.tryNb && !keepPlaying){
 						i++;
-						System.out.println("Try " + i + "/"+tryNb+ " : ");
-						b = this.guess(tg);
+						System.out.println("\nTry " + i + "/"+tryNb+ " : ");
+						keepPlaying = this.guess(tg);
 					}
-					if(b)
+					if(keepPlaying)
 						System.out.println("Well played, let's continue "+p);
 					else
 						System.out.println(""+p+" played.");
 				
 				}
 			}
-			System.out.println("A turn is done.\n");
+			System.out.println("\nNew turn.\n");
 		}
 	
 	}
@@ -161,24 +161,39 @@ public class Game{
 	 *	True si le joueur a réussi , False sinon.
 	 */
 	public boolean guess(String toGuess){
+		//Demande des mots à l'utilisateur.
 		System.out.println("Type " + this.clueNb + " word" + (this.clueNb>1 ? "s" : "") + " : ");
 		Scanner sc = new Scanner(System.in);
 		String[] words = new String[clueNb];
 		for(int i = 0; i<clueNb ; i++){
 			words[i] = sc.next();
 		}
+		
+		//Vérifie leur présence dans les données.
 		for(int j = 0; j<clueNb ; j++){
 			while(!datas.contains(words[j])){
 				System.out.println("\n" + words[j] + " is not a known word. Please enter an other word : ");
 				words[j] = sc.next();
 			}
 		}
+		
+		//Récupère les vecteurs associés.
 		double[][] vectors = new double[clueNb][];
 		for(int k = 0; k < clueNb ; k++)
 			vectors[k] = datas.getVector(words[k]);
+		
+		//Effectue le calcul du mot médian et cherche les mots les plus proche.
 		double[] average = WordVector.average(vectors);
 		HashMap<String, Double> nearestMap = datas.nearest( average , nearestNb);
-		System.out.println(Arrays.asList(nearestMap));
+		String s = "";
+		for(String w : words)
+			s += w + " / ";
+		s = s.substring(0, s.length()-3);
+		
+		//Affiche les résultats
+		System.out.println("\nResults for " + s + " are :");
+		for(String k : nearestMap.keySet())
+			System.out.println(k +" : " + nearestMap.get(k) + ( k.equals(toGuess) ? " It's the word !!! " : ""));
 		return nearestMap.containsKey(toGuess);
 	}
 }

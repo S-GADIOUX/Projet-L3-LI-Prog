@@ -1,31 +1,37 @@
 import com.sgadioux.board.Dice;
 import com.sgadioux.board.Game;
 import com.sgadioux.word.WordVector;
+import java.util.Scanner;
 
 /**
- *
+ * Classe d'exécution principale.
  * @author sebga
  */
 public class Main {
 	
 	/**
-	 *
+	 * Méthode pricipale
 	 * @param args
+	 *	Arugments venant de la ligne de commande.
 	 */
 	public static void main(String[] args){
-		boolean b = true;
+		boolean correct = true;
 		int len = args.length;
 		int i = 0;
-		int nbPlayer = 0;
+		
+		//Ensemble de valeurs par défault
+		int nbPlayer = 1;
 		String path = "";
 		int clueNb = 3;
 		int tryNb = 3;
 		int errorZone = 10;
-		int bLength = 100;
-		double relaunchTile = 0.2; //To unHard
-		double backTile = 0.1; //To unHard
-		int dSize = 6;
+		int boardLength = 100;
+		double relaunchTile = 0.2;
+		double backTile = 0.1;
+		int diceSize = 6;
 		boolean trickedDice = false;
+		
+		// Parsing des arguments
 		while (len > i){
 			switch (args[i]){
 				case("--w2v") :
@@ -34,11 +40,11 @@ public class Main {
 					break;
 				case("--board") :
 					i++;
-					bLength = Integer.parseInt(args[i]);
+					boardLength = Integer.parseInt(args[i]);
 					break;
 				case("--dice") :
 					i++;
-					dSize = Integer.parseInt(args[i]);
+					diceSize = Integer.parseInt(args[i]);
 					break;
 				case("--nbJoueurs"):
 					i++;
@@ -63,27 +69,45 @@ public class Main {
 			i++;
 		
 		}
-		Dice dice = new Dice(dSize, trickedDice);
-		if (bLength<1) {
+		
+		//Verification des arguments
+		Dice dice = new Dice(diceSize, trickedDice);
+		if (boardLength<1) {
 			System.out.println("Board Length must be positive");
-			b = false;
+			correct = false;
 		}
 		WordVector datas = null;
 		try {
 			datas = new WordVector(path);
 		}
 		catch(Exception e){
-			b = false;
+			correct = false;
 			System.out.println("Error in file : ");	
 			e.printStackTrace();
 		}
-		String[] players = new String[nbPlayer];
-		//players = ["Alpha","Delta","Gamma","Echo","Blade","Fire"] ;
+		String[] players = null;
+		if (nbPlayer<1) {
+			System.out.println("We must have at least one player.");
+			correct = false;
+		}else{
+			players = new String[nbPlayer];
+
+			Scanner sc;
+			for(int j = 0; j<nbPlayer; j++){
+				System.out.println("Name of the player "+(j+1)+" : ");
+				sc = new Scanner(System.in);
+				players[j] = sc.next();
+			}
+			for( String s : players)
+				System.out.println(s);
+		}
 		
-		if(b){
-			Game g = new Game(players, bLength, dice, clueNb, tryNb, errorZone, relaunchTile, backTile, datas);
+		//Lancement du jeu dans le cas où les arguments sont corrects
+		if(correct){
+			Game g = new Game(players, boardLength, dice, clueNb, tryNb, errorZone, relaunchTile, backTile, datas);
 			g.play();
 		} else {
+			System.out.println("Sorry, due to bad parameters , the game can not start.");
 		}
 	
 	}
