@@ -27,7 +27,7 @@ public class Main {
 		int tryNb = 3;
 		int errorZone = 10;
 		int boardLength = 100;
-		double relaunchTile = 0.2;
+		double relaunchTile = 0.15;
 		double backTile = 0.1;
 		int diceSize = 6;
 		boolean trickedDice = false;
