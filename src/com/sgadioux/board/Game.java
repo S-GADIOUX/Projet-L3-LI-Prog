@@ -105,17 +105,22 @@ public class Game{
 	}
 
 	/**
-	 *
+	 * Lance la partie.
+	 * Cette fonction lance une partie et s'achève à la fin du tour où un joueur atteint la dernière case.
 	 */
 	public void play(){
 		Tile end = this.board[this.board.length-1];
 		int mv, effect, i;
 		boolean b;
 		while(end.isEmpty()){
+			
+			//Début d'un tour.
 			for(Player p : this.players ){
 				b = true;
 				System.out.println("It's turn of "+p+".");
 				while(b){
+					
+					//Mouvement
 					mv = this.board[p.tileNumber].launch(p,dice);
 					effect = this.board[Math.min(bLength-1, Math.max(p.tileNumber + mv, 0))].land(p,dice);
 					this.board[Math.min(this.board.length-1,Math.max(p.tileNumber + effect, 0))].fall(p);
@@ -123,6 +128,8 @@ public class Game{
 						System.out.println("Incredible "+p+", you finished the game, let's see if someone esle can do it in the same turn.");
 						break;
 					}
+					
+					//Question sur un mot.
 					i = 0;
 					b = false;
 					String tg = datas.getRandomWord();
